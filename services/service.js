@@ -16,6 +16,7 @@ function compare(personA, personB){
     const childrenMap = {};
     const result = {
         spouseMatch: false,
+        allChildrenMatch: false,
         childrenMatch: []
     }
     if(personA.pageId === personB.spouse.pageId){
@@ -29,24 +30,9 @@ function compare(personA, personB){
             result.childrenMatch.push(c);
         }
     }
-    return result;
-}
-
-
-
-function mockOpenSearchWikipedia(){
-    const result = [
-        {
-            pageId: 1,
-            name: 'George W Bush',
-            link: 'https://en.wikipedia.org/wiki/George_W._Bush'
-        },
-        {
-            pageId: 2,
-            name: 'George H W Bush',
-            link: 'https://en.wikipedia.org/wiki/George_H._W._Bush'
-        }
-    ]
+    if(Object.keys(childrenMap).length === result.childrenMatch.length){
+        result.allChildrenMatch = true;
+    }
     return result;
 }
 
@@ -56,7 +42,27 @@ async function searchWikipedia(pageId){
         return resolve(result);
     });
 }
-// Laura Welch 
+
+
+function mockOpenSearchWikipedia(){
+    return openSearchDB;
+}
+
+const openSearchDB = [
+    {
+        pageId: 1,
+        name: 'George W Bush',
+        link: 'https://en.wikipedia.org/wiki/George_W._Bush'
+    },
+    {
+        pageId: 2,
+        name: 'George H W Bush',
+        link: 'https://en.wikipedia.org/wiki/George_H._W._Bush'
+    }
+];
+
+
+// Database
 const georgeWBush = {
     pageId: 1,
     name: 'George W Bush',
